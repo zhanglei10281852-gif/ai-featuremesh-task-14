@@ -48,18 +48,6 @@ type RiskDecision struct {
 	CreatedAt       time.Time
 }
 
-func (e DriftIncident) ApplyDecisionToSample(batch DatasetSnapshot, decision DriftIncidentStatus, rationale string) DatasetSnapshot {
-	updated := batch.Clone()
-	if decision == DriftIncidentCleared {
-		updated.State = SnapshotApproved
-		updated.QuarantineNote = ""
-	}
-	if decision == DriftIncidentRejected {
-		return batch
-	}
-	return updated
-}
-
 func (s DriftIncidentStatus) IsResolved() bool {
 	return s == DriftIncidentCleared || s == DriftIncidentRejected
 }
