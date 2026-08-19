@@ -55,7 +55,8 @@ func (e DriftIncident) ApplyDecisionToSample(batch DatasetSnapshot, decision Dri
 		updated.QuarantineNote = ""
 	}
 	if decision == DriftIncidentRejected {
-		return batch
+		updated.State = SnapshotRejected
+		updated.QuarantineNote = ""
 	}
 	return updated
 }

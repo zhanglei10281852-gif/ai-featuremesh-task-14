@@ -75,10 +75,10 @@ func (s *ReviewService) Decide(ctx context.Context, input DecideInput) (domain.D
 		now := s.clock.Now()
 		for _, batch := range items {
 			original := batch
-			batch = excursion.ApplyDecisionToSample(batch, input.Decision, input.Rationale)
+			batch = drift_incident.ApplyDecisionToSample(batch, input.Decision, input.Rationale)
 			switch input.Decision {
 			case domain.DriftIncidentCleared:
-				if batch.State != domain.SnapshotQuarantined {
+				if original.State != domain.SnapshotQuarantined {
 					continue
 				}
 				batch.State = domain.SnapshotApproved
